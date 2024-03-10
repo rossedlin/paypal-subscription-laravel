@@ -28,5 +28,17 @@ jobs:
       - name: Install SSH Known Hosts
         run: echo $SSH_KNOWN_HOSTS > ~/.ssh/known_hosts
 
-      - name: Update
+      - name: Git Add
+        run: ssh -p $SSH_PORT $SSH_USER@$SSH_IP 'cd ~/repository/paypal-subscription-laravel && git add .'
+
+      - name: Git Reset
+        run: ssh -p $SSH_PORT $SSH_USER@$SSH_IP 'cd ~/repository/paypal-subscription-laravel && git reset HEAD --hard'
+
+      - name: Git Fetch
+        run: ssh -p $SSH_PORT $SSH_USER@$SSH_IP 'cd ~/repository/paypal-subscription-laravel && git fetch'
+
+      - name: Git Pull
         run: ssh -p $SSH_PORT $SSH_USER@$SSH_IP 'cd ~/repository/paypal-subscription-laravel && git pull'
+
+      - name: Composer Install
+        run: ssh -p $SSH_PORT $SSH_USER@$SSH_IP 'cd ~/repository/paypal-subscription-laravel && /opt/alt/php82/usr/bin/php ~/composer.phar install --no-dev --prefer-dist --no-ansi --no-interaction --no-progress'
